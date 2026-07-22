@@ -9,6 +9,7 @@ import { EraserButton } from "~/components/eraser-button"
 import { NesColorPalette } from "~/components/nes-color-palette"
 import { Button } from "~/components/ui/button"
 import { DotCanvas } from "~/routes/_main.dot._index/components/dot-canvas"
+import { ExportMenu } from "~/routes/_main.dot._index/components/export-menu"
 import { LoginRequiredDialog } from "~/routes/_main.dot._index/components/login-required-dialog"
 import { PostDialog } from "~/routes/_main.dot._index/components/post-dialog"
 import { createEmptyGrid } from "~/utils/create-empty-cells"
@@ -92,7 +93,7 @@ export const DotWorkspace = (props: Props) => {
       </div>
       <div className="w-80 flex flex-col gap-y-2">
         <div className="flex justify-end gap-x-2">
-          {/* Task 6 でここに <ExportMenu grid={grid} colors={nesColors} /> を挿入 */}
+          <ExportMenu grid={grid} colors={nesColors} />
           <Button onClick={onClickPost}>{"投稿"}</Button>
         </div>
         <EditorHeader grid={grid} toStringFromGrid={toStringFromGrid} />
