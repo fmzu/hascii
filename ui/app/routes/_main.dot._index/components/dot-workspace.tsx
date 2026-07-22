@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useSession } from "@hono/auth-js/react"
 import { CanvasSizeSelectButton } from "~/components/canvas-size-select-button"
 import { ClearCanvasButton } from "~/components/clear-canvas-button"
 import { CurrentColors } from "~/components/current-colors"
@@ -6,9 +7,15 @@ import { DotSizeSelectButton } from "~/components/dot-size-select-button"
 import { EditorHeader } from "~/components/editor-header"
 import { EraserButton } from "~/components/eraser-button"
 import { NesColorPalette } from "~/components/nes-color-palette"
+import { Button } from "~/components/ui/button"
 import { DotCanvas } from "~/routes/_main.dot._index/components/dot-canvas"
+import { LoginRequiredDialog } from "~/routes/_main.dot._index/components/login-required-dialog"
+import { PostDialog } from "~/routes/_main.dot._index/components/post-dialog"
 import { createEmptyGrid } from "~/utils/create-empty-cells"
+import { nesColorKeys } from "~/utils/nes-color-keys"
+import { nesColors } from "~/utils/nes-colors"
 import { toGridFromString } from "~/utils/to-grid-from-string"
+import { toStringFromGrid } from "~/utils/to-string-from-grid"
 
 type Props = {
   code?: string
@@ -25,6 +32,24 @@ export const DotWorkspace = (props: Props) => {
   )
 
   const [colorId, setColorId] = useState("00")
+
+  const session = useSession()
+
+  const [isPostOpen, setIsPostOpen] = useState(false)
+
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+
+  const dots = toStringFromGrid(grid)
+
+  const callbackUrl = `/dot/${dots}`
+
+  const onClickPost = () => {
+    if (session.status === "authenticated") {
+      setIsPostOpen(true)
+      return
+    }
+    setIsLoginOpen(true)
+  }
 
   const onDraw = (rowIndex: number, colIndex: number) => {
     const newGrid = [...grid]
@@ -66,6 +91,10 @@ export const DotWorkspace = (props: Props) => {
         />
       </div>
       <div className="w-80 flex flex-col gap-y-2">
+        <div className="flex justify-end gap-x-2">
+          {/* Task 6 でここに <ExportMenu grid={grid} colors={nesColors} /> を挿入 */}
+          <Button onClick={onClickPost}>{"投稿"}</Button>
+        </div>
         <EditorHeader grid={grid} toStringFromGrid={toStringFromGrid} />
         <div className="flex space-x-2">
           <CanvasSizeSelectButton onChange={onResizeCanvas} value={rowsCount} />
@@ -89,6 +118,12 @@ export const DotWorkspace = (props: Props) => {
           colors={nesColors}
         />
       </div>
+      <PostDialog open={isPostOpen} onOpenChange={setIsPostOpen} dots={dots} />
+      <LoginRequiredDialog
+        open={isLoginOpen}
+        onOpenChange={setIsLoginOpen}
+        callbackUrl={callbackUrl}
+      />
     </div>
   )
 }
