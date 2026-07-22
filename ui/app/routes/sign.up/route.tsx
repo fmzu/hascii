@@ -1,12 +1,17 @@
-import { useNavigate } from "react-router"
+import { useNavigate, useSearchParams } from "react-router"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { client } from "~/lib/client"
+import { resolveCallbackUrl } from "~/utils/resolve-callback-url"
 
 export default function Route() {
   const navigate = useNavigate()
+
+  const [searchParams] = useSearchParams()
+
+  const callbackUrl = resolveCallbackUrl(searchParams.get("callbackUrl"))
 
   const [loginId, setLoginId] = useState("")
 
@@ -30,7 +35,7 @@ export default function Route() {
     if (result === null) {
       return
     }
-    navigate("/sign/in")
+    navigate(`/sign/in?callbackUrl=${encodeURIComponent(callbackUrl)}`)
   }
 
   return (
