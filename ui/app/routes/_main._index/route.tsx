@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "react-router"
 import { Link, useLoaderData } from "react-router"
+import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
 import { loaderClient } from "~/lib/loader-client"
 import { DotPreviewCanvas } from "~/routes/_main._index/components/dot-preview-canvas"
@@ -19,6 +20,11 @@ export default function Route() {
   return (
     <>
       <MainHeader />
+      <div className="container px-8 pb-4">
+        <Link to="/dot">
+          <Button>{"描いてみる"}</Button>
+        </Link>
+      </div>
       <main className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 md:gap-16 px-8 pb-8 container">
         {data.map((post) => (
           <Link key={post.id} to={`/posts/${post.id}`}>

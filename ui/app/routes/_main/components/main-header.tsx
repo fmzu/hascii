@@ -13,6 +13,9 @@ export function MainHeader() {
       </Link>
       {session.status === "unauthenticated" ? (
         <div className="flex gap-x-4">
+          <Link to={"/dot"}>
+            <Button variant={"secondary"}>{"作成"}</Button>
+          </Link>
           <Link to={"/sign/up"}>
             <Button>{"新規登録"}</Button>
           </Link>
