@@ -1,24 +1,25 @@
-import { verifyAuth } from "@hono/auth-js"
+import { getAuthUser, verifyAuth } from "@hono/auth-js"
 import { vValidator } from "@hono/valibot-validator"
 import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/d1"
 import { HTTPException } from "hono/http-exception"
 import { boolean, object, string } from "valibot"
 import { apiFactory } from "~/interface/api-factory"
+import { canViewPost } from "~/lib/can-view-post"
 import { schema } from "~/lib/schema"
 
 /**
  * 一つの投稿を取得する
+ * 匿名でも呼び出せる。非公開投稿は所有者以外へ 404 を返す
  */
 export const GET = apiFactory.createHandlers(
-  verifyAuth(),
   vValidator("param", object({ post: string() })),
   async (c) => {
     const db = drizzle(c.env.DB, { schema })
 
-    const auth = c.get("authUser")
+    const authUser = await getAuthUser(c)
 
-    const authUserEmail = auth.token?.email ?? null
+    const authUserEmail = authUser?.token?.email ?? null
 
     const postId = c.req.param("post")
 
@@ -32,31 +33,25 @@ export const GET = apiFactory.createHandlers(
       throw new HTTPException(404, { message: "Not found" })
     }
 
-    if (authUserEmail === null) {
-      const isMine = false
+    let isMine = false
 
-      const postJson = { ...post, isMine }
+    if (authUserEmail !== null) {
+      const user = await db
+        .select()
+        .from(schema.users)
+        .where(eq(schema.users.email, authUserEmail))
+        .get()
 
-      return c.json(postJson)
+      if (user !== undefined) {
+        isMine = post.userId === user.id
+      }
     }
 
-    const user = await db
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.email, authUserEmail))
-      .get()
-
-    if (user === undefined) {
-      throw new HTTPException(401, { message: "Unauthorized" })
+    if (canViewPost(post, isMine) === false) {
+      throw new HTTPException(404, { message: "Not found" })
     }
 
-    const userId = user.id
-
-    const isMine = post.userId === userId
-
-    const postJson = { ...post, isMine }
-
-    return c.json(postJson)
+    return c.json({ ...post, isMine })
   },
 )
 
