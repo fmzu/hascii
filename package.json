@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently 'bun run --cwd api dev' 'bun run --cwd ui dev'",
-    "format": "biome check --write --unsafe ."
+    "format": "biome check --write --unsafe .",
+    "test": "bun test"
   },
   "workspaces": ["ui", "api"],
   "dependencies": {

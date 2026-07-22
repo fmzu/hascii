@@ -5,6 +5,7 @@ import { drizzle } from "drizzle-orm/d1"
 import { HTTPException } from "hono/http-exception"
 import { boolean, object, string } from "valibot"
 import { apiFactory } from "~/interface/api-factory"
+import { isListablePost } from "~/lib/is-listable-post"
 import { schema } from "~/lib/schema"
 
 /**
@@ -67,7 +68,7 @@ export const GET = apiFactory.createHandlers(async (c) => {
 
   const posts = await db.select().from(schema.posts)
 
-  const postsJson = posts.map((post) => {
+  const postsJson = posts.filter(isListablePost).map((post) => {
     return {
       ...post,
     }
