@@ -28,6 +28,7 @@
     "paths": {
       "~/*": ["./app/*"]
     },
+    "rootDirs": [".", "./.react-router/types"],
     "noEmit": true
   },
   "references": [{ "path": "../api" }]

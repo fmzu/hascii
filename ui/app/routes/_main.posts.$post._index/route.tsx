@@ -6,9 +6,57 @@ import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
 import { Separator } from "~/components/ui/separator"
 import { client } from "~/lib/client"
+import { loaderClient } from "~/lib/loader-client"
 import { DotPreviewCanvas } from "~/routes/_main._index/components/dot-preview-canvas"
 import { SettingsCard } from "~/routes/_main.posts.$post._index/components/settings-card"
 import { MainHeader } from "~/routes/_main/components/main-header"
+import type { Route } from "./+types/route"
+
+type PostDetail = {
+  title: string | null
+  description: string | null
+  dots: string
+}
+
+/**
+ * サーバーサイドで投稿データを取得する
+ * OGPクローラーはJavaScriptを実行しないため、meta タグをSSRで出力するために必要
+ */
+export async function loader({
+  params,
+}: Route.LoaderArgs): Promise<PostDetail> {
+  const postId = params.post
+
+  if (postId === undefined) {
+    throw new Response("Not Found", { status: 404 })
+  }
+
+  const resp = await loaderClient.posts[":post"].$get({
+    param: { post: postId },
+  })
+
+  if (!resp.ok) {
+    throw new Response("Not Found", { status: 404 })
+  }
+
+  return await resp.json()
+}
+
+export function meta({ data }: Route.MetaArgs) {
+  const apiUrl = import.meta.env.VITE_API_URL
+  const title = data?.title ?? "HASCII"
+  const description = data?.description || "HASCII"
+  const ogpImage = data?.dots ? `${apiUrl}/ogp/${data.dots}` : ""
+
+  return [
+    { title },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: ogpImage },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ]
+}
 
 export default function Route() {
   /**
