@@ -1,7 +1,7 @@
 #:schema ../node_modules/wrangler/config-schema.json
 
 name = "hascii-api"
-compatibility_date = "2023-12-01"
+compatibility_date = "2024-09-23"
 main = "index.ts"
 
 [[d1_databases]]

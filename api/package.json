@@ -8,6 +8,7 @@
     "predev": "drizzle-kit generate && wrangler d1 migrations apply hascii --local"
   },
   "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2",
     "bcrypt-ts": "^5.0.3",
     "drizzle-orm": "^0.38.3"
   },

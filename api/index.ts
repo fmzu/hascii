@@ -4,6 +4,7 @@ import { authConfig } from "~/interface/auth-config"
 import { apiFactory } from "~/interface/api-factory"
 import * as myPosts from "~/interface/routes/my-posts"
 import * as myUser from "~/interface/routes/my-user"
+import * as ogp from "~/interface/routes/ogp"
 import * as postLike from "~/interface/routes/post-like"
 import * as postLikes from "~/interface/routes/post-likes"
 import * as post from "~/interface/routes/post"
@@ -39,3 +40,4 @@ export default apiFactory
   .get("/users", ...users.GET)
   .post("/users", ...users.POST)
   .get("/user/:user", ...user.GET)
+  .get("/ogp/:dots", ...ogp.GET)
