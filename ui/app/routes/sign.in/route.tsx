@@ -25,7 +25,7 @@ export default function Route() {
         password: password,
         redirect: false,
       })
-      if (resp?.status !== 200) {
+      if (resp?.error) {
         return "ログインに失敗しました"
       }
       return null
