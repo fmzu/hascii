@@ -9,7 +9,7 @@ on:
 jobs:
   check:
     name: チェック
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: 👩‍💻 チェックアウト
         uses: actions/checkout@v4
@@ -21,7 +21,8 @@ jobs:
         run: bun test
   deploy:
     name: デプロイ
-    runs-on: ubuntu-20.04
+    needs: check
+    runs-on: ubuntu-latest
     steps:
       - name: 👩‍💻 チェックアウト
         uses: actions/checkout@v4
@@ -30,7 +31,7 @@ jobs:
       - name: 🔨 インストール
         run: bun install
       - name: 💪 ビルド
-        run: bun --cwd ui remix vite:build
+        run: bun run --cwd ui build
       - name: 🚀 デプロイ API
         uses: cloudflare/wrangler-action@v3
         with:
