@@ -10,6 +10,6 @@
     "types": ["@cloudflare/workers-types", "@types/bun"],
     "paths": { "~/*": ["./src/*"] }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "worker-configuration.d.ts"],
   "exclude": ["node_modules"]
 }
