@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router"
-import { useMutation } from "@tanstack/react-query"
-import type { InferRequestType, InferResponseType } from "hono/client"
+import { useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 import { Button } from "~/components/ui/button"
 import {
@@ -11,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog"
-import { client } from "~/lib/client"
+import { deletePostFn } from "~/server/functions/delete-post"
 
 type Props = {
   postId: string
@@ -26,28 +24,10 @@ export function DeleteDialog(props: Props) {
 
   const closeModal = () => setIsOpen(false)
 
-  const endpoint = client.posts[":post"]
-
-  const mutation = useMutation<
-    InferResponseType<typeof endpoint.$delete>,
-    Error,
-    InferRequestType<typeof endpoint.$delete>
-  >({
-    async mutationFn(props) {
-      const resp = await endpoint.$delete({
-        param: props.param,
-      })
-
-      return await resp.json()
-    },
-  })
-
   const onDelete = async () => {
-    await mutation.mutateAsync({
-      param: { post: props.postId },
-    })
+    await deletePostFn({ data: { postId: props.postId } })
     alert("投稿を削除しました")
-    navigate("/")
+    navigate({ to: "/" })
   }
 
   return (

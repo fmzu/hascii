@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { useMutation } from "@tanstack/react-query"
-import { useNavigate } from "react-router"
+import { useNavigate } from "@tanstack/react-router"
 import { toast } from "sonner"
 import { LockKeyholeIcon, LockKeyholeOpenIcon } from "lucide-react"
 import {
@@ -12,7 +11,7 @@ import {
 } from "~/components/ui/dialog"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
-import { client } from "~/lib/client"
+import { createPostFn } from "~/server/functions/create-post"
 
 type Props = {
   open: boolean
@@ -27,24 +26,16 @@ export const PostDialog = (props: Props) => {
 
   const [isPublic, setIsPublic] = useState(false)
 
-  const mutation = useMutation({
-    async mutationFn() {
-      const resp = await client.posts.$post({
-        json: {
-          dots: props.dots,
-          title: title,
-          description: "",
-          isPublic: isPublic,
-        },
-      })
-      return await resp.json()
-    },
-  })
+  const [pending, setPending] = useState(false)
 
   const onSubmit = async () => {
-    const result = await mutation.mutateAsync()
+    setPending(true)
+    const result = await createPostFn({
+      data: { dots: props.dots, title: title, description: "", isPublic },
+    })
+    setPending(false)
     toast("投稿しました")
-    navigate(`/my/posts/${result.postId}`)
+    navigate({ to: "/my/posts/$post", params: { post: result.postId } })
   }
 
   return (
@@ -58,11 +49,11 @@ export const PostDialog = (props: Props) => {
             placeholder={"タイトル"}
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            disabled={mutation.isPending}
+            disabled={pending}
           />
           <Button
             variant={isPublic ? "destructive" : "secondary"}
-            disabled={mutation.isPending}
+            disabled={pending}
             onClick={() => setIsPublic(!isPublic)}
           >
             {isPublic ? <LockKeyholeOpenIcon /> : <LockKeyholeIcon />}
@@ -70,7 +61,7 @@ export const PostDialog = (props: Props) => {
           </Button>
         </div>
         <DialogFooter>
-          <Button onClick={onSubmit} disabled={mutation.isPending}>
+          <Button onClick={onSubmit} disabled={pending}>
             {"投稿"}
           </Button>
         </DialogFooter>

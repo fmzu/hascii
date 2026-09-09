@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { Link } from "@tanstack/react-router"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent } from "~/components/ui/card"
 import { DeleteDialog } from "~/components/delete-dialog"
@@ -15,7 +15,7 @@ export function SettingsCard(props: Props) {
           {"この項目はあなただけに見えています"}
         </p>
         <div className="space-x-2">
-          <Link to={`/posts/${props.postId}/edit`}>
+          <Link to="/posts/$post/edit" params={{ post: props.postId }}>
             <Button>{"編集"}</Button>
           </Link>
           <DeleteDialog postId={props.postId} />

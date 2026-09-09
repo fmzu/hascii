@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { Link } from "@tanstack/react-router"
 import {
   Dialog,
   DialogContent,
@@ -16,8 +16,6 @@ type Props = {
 }
 
 export const LoginRequiredDialog = (props: Props) => {
-  const query = `?callbackUrl=${encodeURIComponent(props.callbackUrl)}`
-
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogContent>
@@ -28,10 +26,16 @@ export const LoginRequiredDialog = (props: Props) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Link to={`/sign/up${query}`}>
+          <Link
+            to="/sign/up"
+            search={{ callbackUrl: props.callbackUrl }}
+          >
             <Button variant={"secondary"}>{"新規登録"}</Button>
           </Link>
-          <Link to={`/sign/in${query}`}>
+          <Link
+            to="/sign/in"
+            search={{ callbackUrl: props.callbackUrl }}
+          >
             <Button>{"ログイン"}</Button>
           </Link>
         </DialogFooter>

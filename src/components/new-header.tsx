@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { Link } from "@tanstack/react-router"
 import { AvatarPopover } from "~/components/avatar-popover"
 import { PostDialog } from "~/components/my-post-dialog"
 
@@ -16,7 +16,7 @@ type Props = {
 export function NewHeader(props: Props) {
   return (
     <header className="flex justify-between items-center container p-8">
-      <Link to={"/"}>
+      <Link to="/">
         <div className="text-xl font-bold">{"HASCII"}</div>
       </Link>
       <div className="flex gap-x-2">

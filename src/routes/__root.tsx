@@ -4,6 +4,8 @@ import {
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router"
+import { Toaster } from "~/components/ui/sonner"
+import "~/styles.css"
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -23,6 +25,7 @@ function RootLayout() {
       </head>
       <body>
         <Outlet />
+        <Toaster />
         <Scripts />
       </body>
     </html>

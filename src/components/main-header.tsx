@@ -1,31 +1,32 @@
-import { useSession } from "@hono/auth-js/react"
-import { Link } from "react-router"
+import { Link } from "@tanstack/react-router"
 import { Button } from "~/components/ui/button"
 import { AvatarPopover } from "~/components/avatar-popover"
 
-export function MainHeader() {
-  const session = useSession()
+type Props = {
+  isAuthenticated: boolean
+}
 
+export function MainHeader(props: Props) {
   return (
     <header className="flex justify-between items-center container p-8">
-      <Link to={"/"}>
+      <Link to="/">
         <div className="text-xl font-bold">{"HASCII"}</div>
       </Link>
-      {session.status === "unauthenticated" ? (
+      {!props.isAuthenticated ? (
         <div className="flex gap-x-4">
-          <Link to={"/dot"}>
+          <Link to="/dot">
             <Button variant={"secondary"}>{"作成"}</Button>
           </Link>
-          <Link to={"/sign/up"}>
+          <Link to="/sign/up" search={{ callbackUrl: "/" }}>
             <Button>{"新規登録"}</Button>
           </Link>
-          <Link to={"/sign/in"}>
+          <Link to="/sign/in" search={{ callbackUrl: "/" }}>
             <Button>{"ログイン"}</Button>
           </Link>
         </div>
       ) : (
         <div className="flex gap-x-4">
-          <Link to={"/my/posts"}>
+          <Link to="/my/posts">
             <Button variant={"secondary"}>{"作成"}</Button>
           </Link>
           <AvatarPopover />

@@ -1,5 +1,4 @@
-import { signOut } from "@hono/auth-js/react"
-import { Link } from "react-router"
+import { Link } from "@tanstack/react-router"
 import { LogOut, SunMoon, UserRound } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
@@ -9,8 +8,14 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover"
 import { Separator } from "~/components/ui/separator"
+import { logoutFn } from "~/server/functions/logout"
 
 export function AvatarPopover() {
+  const onLogout = async () => {
+    await logoutFn()
+    window.location.href = "/"
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -44,9 +49,7 @@ export function AvatarPopover() {
           <Button
             className="flex space-x-2 w-full"
             variant={"ghost"}
-            onClick={() => {
-              signOut()
-            }}
+            onClick={onLogout}
           >
             <LogOut className="w-4 mr-2" />
             {"ログアウト"}

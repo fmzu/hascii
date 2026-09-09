@@ -1,4 +1,3 @@
-import { Link, useNavigate } from "react-router"
 import { Button } from "~/components/ui/button"
 import { Card } from "~/components/ui/card"
 import {
@@ -26,9 +25,6 @@ type Props = {
 }
 
 export function PostDialog(props: Props) {
-  const navigate = useNavigate()
-
-  // isPublicを切り替える関数
   const toggleIsPublic = () => {
     props.setIsPublic(!props.isPublic)
   }
@@ -76,18 +72,15 @@ export function PostDialog(props: Props) {
           </div>
         </div>
         <DialogFooter>
-          <Link to={"/new"}>
-            <Button
-              type="submit"
-              onClick={() => {
-                props.onSubmit()
-                navigate("/new")
-              }}
-              className="w-full"
-            >
-              {"保存"}
-            </Button>
-          </Link>
+          <Button
+            type="submit"
+            onClick={() => {
+              props.onSubmit()
+            }}
+            className="w-full"
+          >
+            {"保存"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
