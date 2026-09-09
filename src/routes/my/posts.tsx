@@ -46,10 +46,7 @@ function MyPostsLayout() {
               <SidebarMenu>
                 {posts.map((post) => (
                   <SidebarMenuItem key={post.id}>
-                    <Link
-                      to="/my/posts/$post"
-                      params={{ post: post.id }}
-                    >
+                    <Link to="/my/posts/$post" params={{ post: post.id }}>
                       <SidebarMenuButton asChild>
                         <span className="flex">
                           {post.isPublic ? (

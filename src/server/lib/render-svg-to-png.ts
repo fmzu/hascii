@@ -1,5 +1,5 @@
 import { Resvg, initWasm } from "@resvg/resvg-wasm"
-// @ts-ignore — resvg-wasm の index_bg.wasm を直接 import
+// @ts-expect-error — resvg-wasm の index_bg.wasm を直接 import
 import resvgWasm from "@resvg/resvg-wasm/index_bg.wasm"
 
 let initialized = false

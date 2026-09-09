@@ -33,9 +33,9 @@ function PostEditPage() {
 
   const [isSpacePressed, setIsSpacePressed] = useState(false)
 
-  const [title, setTitle] = useState(post.title ?? "")
+  const [title, _setTitle] = useState(post.title ?? "")
 
-  const [description, setDescription] = useState(post.description ?? "")
+  const [description, _setDescription] = useState(post.description ?? "")
 
   const [pending, setPending] = useState(false)
 

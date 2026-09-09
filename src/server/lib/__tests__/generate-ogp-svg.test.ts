@@ -16,7 +16,10 @@ it("白背景の矩形が含まれる", () => {
 })
 
 it("色付きセルがrectとして描画される", () => {
-  const grid = [["#FF0000", null], [null, "#00FF00"]]
+  const grid = [
+    ["#FF0000", null],
+    [null, "#00FF00"],
+  ]
   const svg = generateOgpSvg(grid)
   expect(svg).toContain('fill="#FF0000"')
   expect(svg).toContain('fill="#00FF00"')
@@ -31,7 +34,7 @@ it("nullセルはrectを生成しない", () => {
 
 it("8x8グリッドで正しいスケールと中央配置", () => {
   const grid = Array.from({ length: 8 }, () =>
-    Array.from({ length: 8 }, () => "#000000")
+    Array.from({ length: 8 }, () => "#000000"),
   )
   const svg = generateOgpSvg(grid)
   // scale = floor(630 / 8) = 78, art = 78*8 = 624

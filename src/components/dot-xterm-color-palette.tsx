@@ -30,7 +30,7 @@ export const DotXtermColorPalette = (props: Props) => {
               : "outline"
           }
           onClick={() => {
-            props.setColorId(xtermColors.findIndex((c) => c === color))
+            props.setColorId(xtermColors.indexOf(color))
           }}
         >
           <div

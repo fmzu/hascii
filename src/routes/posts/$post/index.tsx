@@ -18,6 +18,22 @@ export const Route = createFileRoute("/posts/$post/")({
     ])
     return { post, user }
   },
+  head: ({ loaderData }) => {
+    const title = loaderData?.post.title ?? "HASCII"
+    const description = loaderData?.post.description || "HASCII"
+    const ogpImage = loaderData?.post.dots ? `/ogp/${loaderData.post.dots}` : ""
+
+    return {
+      meta: [
+        { title },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:image", content: ogpImage },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+    }
+  },
   component: PostDetailPage,
 })
 

@@ -18,7 +18,7 @@ export const DotSizeSelectButton = (props: Props) => {
       <Select
         value={props.value.toString()}
         onValueChange={(value) => {
-          props.onChange(Number.parseInt(value))
+          props.onChange(Number.parseInt(value, 10))
         }}
       >
         <SelectTrigger className="w-[180px]">

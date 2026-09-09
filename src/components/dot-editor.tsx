@@ -24,7 +24,7 @@ export function DotEditor(props: Props) {
     y: 0,
   })
 
-  const [dotSize, setDotSize] = useState(16)
+  const [dotSize, _setDotSize] = useState(16)
 
   const [colorIndex, setColorIndex] = useState<number | null>(1)
 

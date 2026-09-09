@@ -30,7 +30,7 @@ export const XtermColorPalette = (props: Props) => {
               )}
               variant={"default"}
               onClick={() => {
-                props.setColorId(xtermColors.findIndex((c) => c === color))
+                props.setColorId(xtermColors.indexOf(color))
               }}
               style={{ backgroundColor: color }}
             />

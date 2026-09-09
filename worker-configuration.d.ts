@@ -3,8 +3,8 @@
 // @cloudflare/workers-types 4.x の `cloudflare:workers` env は `Cloudflare.Env` 名前空間を参照するため、
 // そちらにマージされるよう手動で修正している。wrangler 4.x に上げれば typegen が自動でこの形式を出力する。
 declare namespace Cloudflare {
-	interface Env {
-		DB: D1Database;
-	}
+  interface Env {
+    DB: D1Database
+  }
 }
 interface Env extends Cloudflare.Env {}

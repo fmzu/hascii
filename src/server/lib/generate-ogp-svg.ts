@@ -1,9 +1,7 @@
 const OGP_WIDTH = 1200
 const OGP_HEIGHT = 630
 
-export const generateOgpSvg = (
-  colorGrid: (string | null)[][],
-): string => {
+export const generateOgpSvg = (colorGrid: (string | null)[][]): string => {
   const rows = colorGrid.length
   const cols = rows === 0 ? 0 : colorGrid[0].length
   const gridSize = Math.max(rows, cols)

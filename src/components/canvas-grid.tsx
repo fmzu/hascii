@@ -16,7 +16,7 @@ export function CanvasGrid(props: Props) {
     <div className={"absolute pointer-events-none"}>
       {props.grid.map((row, rowIndex) => (
         <div key={rowIndex.toString()} className="flex">
-          {row.map((cell, colIndex) => (
+          {row.map((_cell, colIndex) => (
             <div
               key={colIndex.toString()}
               className={cn("border")}

@@ -31,20 +31,11 @@ jobs:
       - name: 🔨 インストール
         run: bun install
       - name: 💪 ビルド
-        run: bun run --cwd ui build
-      - name: 🚀 デプロイ API
+        run: bun run build
+      - name: 🚀 デプロイ
         uses: cloudflare/wrangler-action@v3
         with:
           packageManager: bun
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy index.ts --name=hascii-api
-          workingDirectory: api
-      - name: 🚀 デプロイ ウェブサイト
-        uses: cloudflare/wrangler-action@v3
-        with:
-          packageManager: bun
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy ./build/client --project-name=hascii
-          workingDirectory: ui
+          command: deploy

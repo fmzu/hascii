@@ -52,7 +52,7 @@ export function DotCanvas(props: Props) {
     })
   }
 
-  const onTouchStart = (canvas: HTMLCanvasElement, x: number, y: number) => {
+  const onTouchStart = (_canvas: HTMLCanvasElement, x: number, y: number) => {
     setCursorPosition({ x, y })
   }
 
@@ -70,7 +70,7 @@ export function DotCanvas(props: Props) {
     })
   }
 
-  const onTouchEnd = (canvas: HTMLCanvasElement, x: number, y: number) => {
+  const onTouchEnd = (_canvas: HTMLCanvasElement, _x: number, _y: number) => {
     // console.log("onTouchEnd", x, y)
   }
 

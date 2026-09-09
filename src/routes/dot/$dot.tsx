@@ -7,6 +7,16 @@ export const Route = createFileRoute("/dot/$dot")({
     const user = await getCurrentUserFn()
     return { isAuthenticated: user !== null }
   },
+  head: ({ params }) => ({
+    meta: [
+      { title: "HASCII" },
+      { property: "og:title", content: "HASCII" },
+      { property: "og:description", content: "ドット絵エディタ" },
+      { property: "og:image", content: `/ogp/${params.dot}` },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: DotPage,
 })
 

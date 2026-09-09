@@ -22,20 +22,16 @@ export const LoginRequiredDialog = (props: Props) => {
         <DialogHeader>
           <DialogTitle>{"投稿にはログインが必要です"}</DialogTitle>
           <DialogDescription>
-            {"描いた絵はそのままURLに残るので、ログイン後にこの画面へ戻ります。"}
+            {
+              "描いた絵はそのままURLに残るので、ログイン後にこの画面へ戻ります。"
+            }
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Link
-            to="/sign/up"
-            search={{ callbackUrl: props.callbackUrl }}
-          >
+          <Link to="/sign/up" search={{ callbackUrl: props.callbackUrl }}>
             <Button variant={"secondary"}>{"新規登録"}</Button>
           </Link>
-          <Link
-            to="/sign/in"
-            search={{ callbackUrl: props.callbackUrl }}
-          >
+          <Link to="/sign/in" search={{ callbackUrl: props.callbackUrl }}>
             <Button>{"ログイン"}</Button>
           </Link>
         </DialogFooter>

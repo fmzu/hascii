@@ -14,7 +14,7 @@ type Props = {
   code?: string
 }
 
-export const AsciiWorkspace = (props: Props) => {
+export const AsciiWorkspace = (_props: Props) => {
   const [rowsCount, setRowsCount] = useState(8)
 
   // ドットの大きさを管理するための状態を作成します
@@ -34,7 +34,7 @@ export const AsciiWorkspace = (props: Props) => {
     setGrid(newGrid)
   }
 
-  const usedColors = new Set(grid.flat().map((cell) => cell[1]))
+  const _usedColors = new Set(grid.flat().map((cell) => cell[1]))
 
   const [eraserMode, setEraserMode] = useState(false)
 
