@@ -6,8 +6,7 @@ import { authMiddleware } from "~/server/auth/middleware"
 
 export const deleteMyUserFn = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .validator((data: { userId: string }) => data)
-  .handler(async ({ context, data }) => {
+  .handler(async ({ context }) => {
     const db = getRequestDb()
 
     const userId = context.session.userId
@@ -15,7 +14,7 @@ export const deleteMyUserFn = createServerFn({ method: "POST" })
       throw new Error("Unauthorized")
     }
 
-    await db.delete(schema.users).where(eq(schema.users.id, data.userId))
+    await db.delete(schema.users).where(eq(schema.users.id, userId))
 
     return {}
   })

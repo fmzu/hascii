@@ -4,6 +4,7 @@ import {
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router"
+import { RootProviders } from "~/components/root-providers"
 import { Toaster } from "~/components/ui/sonner"
 import "~/styles.css"
 
@@ -24,8 +25,10 @@ function RootLayout() {
         <HeadContent />
       </head>
       <body>
-        <Outlet />
-        <Toaster />
+        <RootProviders>
+          <Outlet />
+          <Toaster />
+        </RootProviders>
         <Scripts />
       </body>
     </html>

@@ -9,19 +9,24 @@ import { SettingsCard } from "~/components/settings-card"
 import { MainHeader } from "~/components/main-header"
 import { getPostFn } from "~/server/functions/get-post"
 import { getCurrentUserFn } from "~/server/functions/get-current-user"
+import { getSiteUrlFn } from "~/server/functions/get-site-url"
 
 export const Route = createFileRoute("/posts/$post/")({
   loader: async ({ params }) => {
-    const [post, user] = await Promise.all([
+    const [post, user, siteUrl] = await Promise.all([
       getPostFn({ data: { postId: params.post } }),
       getCurrentUserFn(),
+      getSiteUrlFn(),
     ])
-    return { post, user }
+    return { post, user, siteUrl }
   },
   head: ({ loaderData }) => {
     const title = loaderData?.post.title ?? "HASCII"
     const description = loaderData?.post.description || "HASCII"
-    const ogpImage = loaderData?.post.dots ? `/ogp/${loaderData.post.dots}` : ""
+    const ogpImage =
+      loaderData?.post.dots && loaderData.siteUrl
+        ? `${loaderData.siteUrl}/ogp/${loaderData.post.dots}`
+        : ""
 
     return {
       meta: [

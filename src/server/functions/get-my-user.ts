@@ -24,5 +24,10 @@ export const getMyUserFn = createServerFn({ method: "GET" })
       throw new Error("Not found")
     }
 
-    return { ...user }
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      avatarIconUrl: user.avatarIconUrl,
+    }
   })

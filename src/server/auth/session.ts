@@ -6,9 +6,10 @@ type SessionData = {
 }
 
 export const useAppSession = () => {
-  return useSession<SessionData>({
-    password:
-      process.env.AUTH_SECRET ??
-      "fallback-secret-at-least-32-characters-long!!",
-  })
+  const secret = process.env.AUTH_SECRET
+  if (!secret) {
+    throw new Error("AUTH_SECRET environment variable is required")
+  }
+
+  return useSession<SessionData>({ password: secret })
 }
