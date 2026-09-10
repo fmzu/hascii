@@ -8,7 +8,7 @@
         "noUnusedImports": "error"
       }
     },
-    "ignore": ["ui/app/components/ui", "ui/app/hooks/use-toast.ts"]
+    "ignore": ["src/components/ui", "src/hooks/use-toast.ts"]
   },
   "formatter": {
     "indentStyle": "space",
@@ -23,6 +23,6 @@
     }
   },
   "files": {
-    "ignore": ["*/.wrangler", "ui/.react-router", "ui/build"]
+    "ignore": [".wrangler", "src/routeTree.gen.ts", "dist"]
   }
 }

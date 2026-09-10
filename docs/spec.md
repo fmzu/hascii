@@ -95,8 +95,9 @@ type Post = {
 
 - 言語: TypeScript
 - ランタイム: Cloudflare Workers
-- 構成: モノレポ（`ui/` = React Router v7 + Cloudflare Workers、`api/` = Hono + Drizzle + Cloudflare D1）
-- 認証: Auth.js Credentials（メール + パスワード）
+- 構成: 単一Worker（TanStack Start）
+- DB: Drizzle ORM + Cloudflare D1
+- 認証: セッション + bcrypt-ts（Credentials）
 - その他: パッケージマネージャは Bun、Lint/Format は Biome
 
 ## テスト観点
